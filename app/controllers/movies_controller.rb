@@ -61,7 +61,16 @@ class MoviesController < ApplicationController
   end
 
   def sort_by_titles
-    @movies = Movie.order('title').all
+    #@movies = Movie.order('title').all
+    @all_ratings = Movie.all.select('rating').distinct
+    @selected_ratings = params[:ratings] || {}
+    @selected_ratings_keys = []
+    if @selected_ratings != {}
+      @selected_ratings_keys = @selected_ratings.keys
+      @movies = Movie.where(rating:@selected_ratings_keys).order('title')
+    else
+      @movies = Movie.order('title').all
+    end
   end
 
 end
