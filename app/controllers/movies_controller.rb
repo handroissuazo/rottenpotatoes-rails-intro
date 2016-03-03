@@ -21,7 +21,15 @@ class MoviesController < ApplicationController
       @date_header = 'hilite'
     end
 
-    @movies = Movie.order(key).all
+    @all_ratings = Movie.all.select('rating').distinct
+    @selected_ratings = params[:ratings] || {}
+    @selected_ratings_keys = []
+    if @selected_ratings != {}
+      @selected_ratings_keys = @selected_ratings.keys
+      @movies = Movie.where(rating:@selected_ratings_keys).order(key)
+    else
+      @movies = Movie.order(key).all
+    end
   end
 
   def new
