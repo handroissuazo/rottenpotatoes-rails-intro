@@ -34,7 +34,7 @@ class MoviesController < ApplicationController
       flash.keep
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
-    
+
     @selected_ratings_keys = []
     if @selected_ratings != {}
       @selected_ratings_keys = @selected_ratings.keys
